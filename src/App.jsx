@@ -1,12 +1,12 @@
--
-function App() {
-  const [count, setCount] = useState(0)
+
+export default function App() {
 
   return (
     <>
-      <input type="text" />
+      <form action="">
+        <input type="text" />
+        <button type="submit">Søg</button>
+      </form>
     </>
   )
 }
-
-export default App
