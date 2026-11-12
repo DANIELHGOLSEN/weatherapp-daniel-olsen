@@ -1,16 +1,19 @@
+// disse imports importere "hooks" fra de forskellige sider. Hooks er funktioner og lignene der kan genbruges igen og igen.
 import { useState } from "react"
 import useFetch from "./Hooks/useFetch"
 
 export default function App() {
 
+  // Her importerer vi de forskellige apier fra env filen så de kan bruges her i koden.
   const apiKey = import.meta.env.VITE_APIKEY
   const baseGeoUrl = import.meta.env.VITE_GEOCODING
   const baseWeatherUrl = import.meta.env.VITE_CURRENTWEATHER
 
+  //Her laves en variabel som starter med at være en tom streng, så vi senere hen kan fylde i den.
   let geoURL = ""
   let weatherURL = ""
-  // const weatherUrl = new URL(baseWeatherUrl)
 
+  //Her gør vi så city variablen tilsvarer byen som brugeren har indtastet i input feltet.
   const [city, setCity] = useState("")
 
   function handleForm(event) {
@@ -25,18 +28,21 @@ export default function App() {
     setCity(cityName)
 
   }
-
+  //Hvis brugeren har skrevet en by ind så starter den her if statement.
   if (city) {
+    //Her laver vi en ny url til byen som indholder byens navn og apikey.
     const geoUrl = new URL(baseGeoUrl)
 
     geoUrl.searchParams.set("q", city)
     geoUrl.searchParams.set("appid", apiKey)
 
+    //Her tager vi den nye url og sender den videre til det andede kode der nu skal bruge den.
     geoURL = geoUrl
   }
 
   const geoData = useFetch(geoURL)
 
+  //Den her if statement starter når vi har den url fra if statementen over den.
   if (geoData) {
     const lon = geoData[0].lon
     const lat = geoData[0].lat
